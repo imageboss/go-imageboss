@@ -17,7 +17,7 @@ const (
 	DefaultBaseURL = "https://img.imageboss.me"
 	// LibVersion is the library version (for reference and release tracking).
 	// It is not appended to generated URLs.
-	LibVersion = "go-v1.0.0"
+	LibVersion = "go-v1.0.1"
 )
 
 // URLBuilder builds ImageBoss image URLs.

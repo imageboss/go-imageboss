@@ -1,5 +1,11 @@
 # @imageboss/go
 
+## 1.0.1
+
+### Patch Changes
+
+- first version of the go library
+
 ## 1.0.0
 
 ### Major

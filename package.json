@@ -1,6 +1,6 @@
 {
   "name": "@imageboss/go",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "description": "Go client for ImageBoss image URLs",
   "repository": {
@@ -8,7 +8,10 @@
     "url": "https://github.com/imageboss/imageboss-go"
   },
   "scripts": {
-    "version": "changeset version"
+    "changeset": "changeset add",
+    "changeset:version": "CI=1 changeset version && node scripts/update-lib-version.js",
+    "changeset:status": "changeset status",
+    "update:lib-version": "node scripts/update-lib-version.js"
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.0"

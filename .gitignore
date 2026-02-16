@@ -1,0 +1,12 @@
+# Dependencies
+node_modules/
+
+# Go
+*.exe
+*.test
+*.out
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
