@@ -11,7 +11,9 @@
     "changeset": "changeset add",
     "changeset:version": "CI=1 changeset version && node scripts/update-lib-version.js",
     "changeset:status": "changeset status",
-    "update:lib-version": "node scripts/update-lib-version.js"
+    "update:lib-version": "node scripts/update-lib-version.js",
+    "tag:push": "node scripts/tag-and-push.js",
+    "release": "npm run changeset:version && node scripts/release-commit-and-tag.js"
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.0"

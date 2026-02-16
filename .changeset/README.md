@@ -37,11 +37,20 @@ npx changeset add --empty
 2. Run:
 
    ```bash
-   npm run changeset:version
-   # or: CI=1 npx changeset version
+   npm run release
    ```
 
-   Setting `CI=1` avoids TTY-related warnings in CI or non-interactive shells. This will:
+   This runs `changeset:version` (bumps version, updates `CHANGELOG.md` and `LibVersion` in `builder.go`), then commits the changed files, pushes to `main`, and creates and pushes the tag `v<version>`.
+
+   Or run only the version step, then commit and push the changed files, then run `npm run tag:push` to create and push the tag:
+
+   ```bash
+   npm run changeset:version
+   git add package.json builder.go CHANGELOG.md .changeset/ && git commit -m "chore: release vX.Y.Z" && git push origin main
+   npm run tag:push
+   ```
+
+   Setting `CI=1` avoids TTY-related warnings in CI or non-interactive shells. That step will:
 
    - Bump the version in `package.json`.
    - Update `CHANGELOG.md` with the new changesets.
