@@ -133,8 +133,10 @@ go run ./examples/basic
 This repo uses [Changesets](https://github.com/changesets/changesets) for versioning and changelogs. Run `npm install` first so the `changeset` CLI is available.
 
 1. **Add a changeset** after making a change: `npm run changeset` (choose bump type and add a summary).
-2. **Version** when ready to release: `npm run changeset:version` (updates `package.json` and `CHANGELOG.md`). Use this in CI too; it runs with `CI=1` to avoid TTY warnings.
-3. **Tag the Go module**: `npm run changeset:version` already updates `LibVersion` in `builder.go` from `package.json`. Then e.g. `git tag v1.0.1 && git push origin v1.0.1`.
+2. **Version and tag** when ready to release:
+   - **One command:** `npm run release` — runs `changeset:version` (updates `package.json`, `CHANGELOG.md`, `builder.go`), then commits, pushes to `main`, and creates and pushes the tag `v<version>`.
+   - **Or step by step:** `npm run changeset:version`, then commit and push the changed files, then `npm run tag:push` to create and push the tag from the version in `package.json`.
+3. On **push to `main`**, the [release workflow](.github/workflows/release.yml) does the same (version, commit, push, tag) when there were changesets.
 
 See [.changeset/README.md](.changeset/README.md) for details.
 

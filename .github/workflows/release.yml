@@ -7,8 +7,12 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write  # needed to push commits and tags
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # full history for tagging
 
       - uses: actions/setup-node@v4
         with:
@@ -17,12 +21,20 @@ jobs:
 
       - run: npm ci
 
-      - name: Create Release PR or Publish
-        uses: changesets/action@v1
-        with:
-          version: npm run changeset:version
-          publish: echo "Private package, skip npm publish"
-          title: "chore: release"
-          commit: "chore: release"
+      - name: Version and tag
+        run: |
+          npm run changeset:version
+          if git diff --quiet package.json builder.go CHANGELOG.md 2>/dev/null && [ -z "$(git status --porcelain .changeset)" ]; then
+            echo "No release (no changesets consumed)."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          V=$(node -p "require('./package.json').version")
+          git add package.json builder.go CHANGELOG.md .changeset/
+          git commit -m "chore: release v${V}"
+          git push origin main
+          git tag "v${V}"
+          git push origin "v${V}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
