@@ -132,11 +132,9 @@ go run ./examples/basic
 
 This repo uses [Changesets](https://github.com/changesets/changesets) for versioning and changelogs. Run `npm install` first so the `changeset` CLI is available.
 
-1. **Add a changeset** after making a change: `npm run changeset` (choose bump type and add a summary).
-2. **Version and tag** when ready to release:
-   - **One command:** `npm run release` — runs `changeset:version` (updates `package.json`, `CHANGELOG.md`, `builder.go`), then commits, pushes to `main`, and creates and pushes the tag `v<version>`.
-   - **Or step by step:** `npm run changeset:version`, then commit and push the changed files, then `npm run tag:push` to create and push the tag from the version in `package.json`.
-3. On **push to `main`**, the [release workflow](.github/workflows/release.yml) does the same (version, commit, push, tag) when there were changesets.
+1. **Add a changeset** after making a change: `npm run changeset` (choose bump type and add a summary). Commit and push to `main`.
+2. **CI does the rest:** On push to `main`, the [release workflow](.github/workflows/release.yml) runs. If there were unreleased changesets, it runs the version bump, commits and pushes the updated `package.json`, `CHANGELOG.md`, and `builder.go`, and **creates and pushes the tag** (e.g. `v1.0.3`). You don’t need to run `release` or `tag:push` locally.
+3. **Releasing without CI:** If you’re not using the workflow, run `npm run release` locally (it versions, commits, pushes to `main`, and creates/pushes the tag), or do `npm run changeset:version` → commit & push → `npm run tag:push`.
 
 See [.changeset/README.md](.changeset/README.md) for details.
 

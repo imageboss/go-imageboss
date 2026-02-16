@@ -33,35 +33,9 @@ npx changeset add --empty
 
 ## Releasing a new version
 
-1. Merge all changesets into `main` (or your release branch).
-2. Run:
-
-   ```bash
-   npm run release
-   ```
-
-   This runs `changeset:version` (bumps version, updates `CHANGELOG.md` and `LibVersion` in `builder.go`), then commits the changed files, pushes to `main`, and creates and pushes the tag `v<version>`.
-
-   Or run only the version step, then commit and push the changed files, then run `npm run tag:push` to create and push the tag:
-
-   ```bash
-   npm run changeset:version
-   git add package.json builder.go CHANGELOG.md .changeset/ && git commit -m "chore: release vX.Y.Z" && git push origin main
-   npm run tag:push
-   ```
-
-   Setting `CI=1` avoids TTY-related warnings in CI or non-interactive shells. That step will:
-
-   - Bump the version in `package.json`.
-   - Update `CHANGELOG.md` with the new changesets.
-   - Remove the used changeset files.
-   - Update the `LibVersion` constant in `builder.go` to match (via `scripts/update-lib-version.js`).
-
-3. For the Go module, tag and push:
-
-   - Create a git tag: `git tag v1.0.1` and push: `git push origin v1.0.1`.
-
-4. Commit the version and changelog updates, then push.
+1. Merge all changesets into `main` (or your release branch) and push.
+2. **With CI (default):** The [release workflow](.github/workflows/release.yml) runs on push to `main`. If there are unreleased changesets, it runs the version bump, commits and pushes, and creates and pushes the tag. You don’t need to run anything else.
+3. **Without CI:** Run `npm run release` (it versions, commits, pushes to `main`, and creates/pushes the tag). Or do it step by step: `npm run changeset:version`, then commit and push the changed files, then `npm run tag:push`.
 
 ## Checking status
 
@@ -74,6 +48,3 @@ npm run changeset:status
 
 If you see “Some packages have been changed but no changesets were found”, add a changeset with `npm run changeset` or run `npx changeset add --empty` if you don’t intend to release yet.
 
-## CI
-
-You can automate versioning and tagging with a CI job (e.g. [changesets/action](https://github.com/changesets/action)). Use `CI=1` (or run `npm run changeset:version`) when calling `changeset version` in CI.
