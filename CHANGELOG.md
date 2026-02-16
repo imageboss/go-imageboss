@@ -1,5 +1,11 @@
 # @imageboss/go
 
+## 1.0.4
+
+### Patch Changes
+
+- 1e181c3: improving ci
+
 ## 1.0.3
 
 ### Patch Changes
