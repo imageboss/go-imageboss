@@ -1,5 +1,11 @@
 # @imageboss/go
 
+## 1.0.2
+
+### Patch Changes
+
+- Removing unnecessary files
+
 ## 1.0.1
 
 ### Patch Changes
